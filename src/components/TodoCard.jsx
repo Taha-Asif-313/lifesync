@@ -1,25 +1,27 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import {
   CheckCircle2,
-  Clock,
   Trash2,
   Timer,
   Flag,
   Tag,
   MoreVertical,
-  Pencil,
 } from "lucide-react";
+import TodoContext from "../context/todoContext";
 
-const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
-  const { title, desc, completed, completeBy, createdAt, priority, category } = Task;
+const TodoCard = ({ Task }) => {
+  const { title, desc, completed, completeBy, createdAt, priority, category } =
+    Task;
+
+  const { deleteTodo, completeTodo } = useContext(TodoContext);
 
   const [remaining, setRemaining] = useState("");
   const [isExpired, setIsExpired] = useState(false);
   const [progress, setProgress] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const deleteScheduled = useRef(false);
 
-  // 🕒 Countdown + Auto Delete
   useEffect(() => {
     const updateTimer = () => {
       const now = new Date();
@@ -33,8 +35,12 @@ const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
         setRemaining("Expired");
         setIsExpired(true);
         setProgress(100);
-        // Auto delete after 5s
-        setTimeout(() => DeleteTodo(Task), 5000);
+
+        // ✅ Schedule delete only once
+        if (!deleteScheduled.current) {
+          deleteScheduled.current = true;
+          setTimeout(() => deleteTodo(Task.id), 5000); // use context method
+        }
       } else {
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff / (1000 * 60)) % 60);
@@ -47,13 +53,32 @@ const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [createdAt, completeBy, DeleteTodo, Task]);
+  }, [createdAt, completeBy, Task, deleteTodo]);
 
-  // 🎯 Priority Colors
+  // Priority Colors
   const priorityColors = {
-    high: "text-red-400 border-red-400/30 bg-red-500/10",
+    high: "text-red-600 border-red-600 bg-red-600/5",
     normal: "text-yellow-400 border-yellow-400/30 bg-yellow-500/10",
-    low: "text-blue-400 border-blue-400/30 bg-blue-500/10",
+    low: "text-blue-600 border-blue-600/30 bg-blue-600/5",
+  };
+
+  // ✅ Handlers
+  const handleComplete = async () => {
+    try {
+      await completeTodo(Task.id);
+      setMenuOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteTodo(Task.id);
+      setMenuOpen(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -61,7 +86,11 @@ const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
       className={`group relative w-full border border-zinc-800 bg-linear-to-br from-zinc-950 via-black to-zinc-950
                   rounded-2xl px-5 py-5 flex flex-col gap-3 transition-all duration-500
                   hover:shadow-[0_0_25px_rgba(0,255,160,0.2)] hover:scale-[1.015]
-                  ${isExpired && !completed ? "opacity-50 cursor-not-allowed" : ""}
+                  ${
+                    isExpired && !completed
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }
                   ${completed ? "border-primary/50" : ""}`}
     >
       {/* Header */}
@@ -90,33 +119,15 @@ const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
             >
               {!completed && !isExpired && (
                 <button
-                  onClick={() => {
-                    CompleteTodo(Task);
-                    setMenuOpen(false);
-                  }}
+                  onClick={handleComplete}
                   className="flex items-center gap-2 px-4 py-2 text-primary hover:bg-primary/10 transition-all"
                 >
                   <CheckCircle2 size={16} /> Mark as Done
                 </button>
               )}
 
-              {!completed && (
-                <button
-                  onClick={() => {
-                    EditTodo && EditTodo(Task);
-                    setMenuOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2 text-blue-400 hover:bg-blue-400/10 transition-all"
-                >
-                  <Pencil size={16} /> Edit Task
-                </button>
-              )}
-
               <button
-                onClick={() => {
-                  DeleteTodo(Task);
-                  setMenuOpen(false);
-                }}
+                onClick={handleDelete}
                 className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/10 transition-all"
               >
                 <Trash2 size={16} /> Delete
@@ -154,7 +165,9 @@ const TodoCard = ({ Task, CompleteTodo, DeleteTodo, EditTodo }) => {
       {!completed && (
         <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
           <Timer size={12} className="text-primary" />
-          <span>{isExpired ? "⏰ Auto deleting soon..." : `Time Left: ${remaining}`}</span>
+          <span>
+            {isExpired ? "⏰ Auto deleting soon..." : `Time Left: ${remaining}`}
+          </span>
         </div>
       )}
 

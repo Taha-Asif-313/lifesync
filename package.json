@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@neuctra/authix": "^1.1.10",
+    "@neuctra/authix": "^1.1.12",
     "@tailwindcss/vite": "^4.1.17",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.553.0",

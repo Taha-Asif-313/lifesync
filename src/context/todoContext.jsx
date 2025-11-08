@@ -1,47 +1,60 @@
-import React, { createContext, useEffect, useState } from "react";
+// context/todoContext.js
+"use client";
+import { createContext, useState, useCallback } from "react";
+import {
+  GetAllTasks,
+  DeleteTask,
+  CompleteTask,
+  CreateTask,
+} from "../utils/authixInit";
 import toast from "react-hot-toast";
 
 const TodoContext = createContext();
 
 export const TodoProvider = ({ children }) => {
-  // States
-  const [todoList, setTodoList] = useState(() => {
-    const savedData = localStorage.getItem("TodoList");
-    return savedData ? JSON.parse(savedData) : [];
-  });
+  const [todoList, setTodoList] = useState([]);
 
-  // Use Effect to store data in localStorage
-  useEffect(() => {
-    localStorage.setItem("TodoList", JSON.stringify(todoList));
-  }, [todoList]);
-
-  // Function to add todo
-  const addTodo = (todo) => {
-    setTodoList([...todoList, todo]);
-    toast.success("Todo added!");
+  // Add a task
+  const addTodo = async (task) => {
+    try {
+      const created = await CreateTask(task);
+      setTodoList((prev) => [...prev, created]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // Function to delete todo
-  const deleteTodo = (taskToDelete) => {
-    setTodoList((prevTasks) =>
-      prevTasks.filter((task) => task !== taskToDelete)
-    );
-    toast.success("Task deleted!");
+  // Delete a task
+  const deleteTodo = async (taskId) => {
+    try {
+      await DeleteTask(taskId);
+      setTodoList((prev) => prev.filter((t) => t.id !== taskId));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // Function to mark todo as completed
-  const completeTodo = (todo) => {
-    const updatedList = todoList.map((task) =>
-      task === todo ? { ...task, completed: true } : task
-    );
-    setTodoList(updatedList);
-    toast.success("Task completed!");
+  // Complete a task
+  const completeTodo = async (taskId) => {
+    try {
+      const updated = await CompleteTask(taskId);
+      setTodoList((prev) =>
+        prev.map((t) => (t.id === taskId ? { ...t, ...updated } : t))
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // Return with children
   return (
     <TodoContext.Provider
-      value={{ todoList, addTodo, deleteTodo, completeTodo }}
+      value={{
+        todoList,
+        setTodoList,
+        addTodo,
+        deleteTodo,
+        completeTodo,
+      }}
     >
       {children}
     </TodoContext.Provider>

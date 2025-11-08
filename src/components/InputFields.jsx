@@ -1,8 +1,10 @@
+"use client";
 import React, { useContext, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import TodoContext from "../context/todoContext";
 import toast from "react-hot-toast";
+import { CreateTask } from "../utils/authixInit";
 
 const InputFields = ({ Show, setShow }) => {
   const { addTodo } = useContext(TodoContext);
@@ -24,7 +26,7 @@ const InputFields = ({ Show, setShow }) => {
   };
 
   // handle submit
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     const { title, desc, completeBy } = todoInput;
@@ -38,26 +40,29 @@ const InputFields = ({ Show, setShow }) => {
     const dueTime = new Date(completeBy);
     const expired = now > dueTime;
 
-    addTodo({
-      ...todoInput,
-      expired,
-      createdAt: new Date().toISOString(),
-    });
+    try {
+      // add task to context for real-time update
+      addTodo(todoInput);
 
-    toast.success(expired ? "Task added (already expired)" : "Task added!");
+      toast.success(expired ? "Task added (already expired)" : "Task added!");
 
-    // reset
-    setTodoInput({
-      title: "",
-      desc: "",
-      completed: false,
-      expired: false,
-      priority: "normal",
-      category: "",
-      createdAt: new Date().toISOString(),
-      completeBy: "",
-    });
-    setShow(false);
+      // reset inputs
+      setTodoInput({
+        title: "",
+        desc: "",
+        completed: false,
+        expired: false,
+        priority: "normal",
+        category: "",
+        createdAt: new Date().toISOString(),
+        completeBy: "",
+      });
+
+      setShow(false);
+    } catch (err) {
+      console.error("Error adding task:", err);
+      toast.error(err.message || "Failed to add task");
+    }
   };
 
   return (
@@ -98,7 +103,9 @@ const InputFields = ({ Show, setShow }) => {
               <h2 className="text-xl font-semibold bg-linear-to-r from-[#00ba0f] to-lime-400 bg-clip-text text-transparent">
                 Add New Task
               </h2>
-              <p className="text-xs text-zinc-400">Set task details and deadlines below</p>
+              <p className="text-xs text-zinc-400">
+                Set task details and deadlines below
+              </p>
             </div>
 
             {/* Inputs */}

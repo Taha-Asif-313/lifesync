@@ -39,7 +39,7 @@ const App = () => {
           </Route>
         </Routes>
 
-        <Toaster position="top-right" />
+        <Toaster containerClassName="!text-sm" position="top-right" />
       </div>
     </Router>
   );

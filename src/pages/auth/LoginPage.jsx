@@ -1,13 +1,20 @@
-import { ReactUserLogin } from '@neuctra/authix'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { ReactUserLogin } from "@neuctra/authix";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   return (
-    <ReactUserLogin logoUrl={"/logo.png"} onError={(err)=>console.log(err)
-    } onSuccess={()=>navigate("/tasks")} />
-  )
-}
+    <div className="py-20">
+      <ReactUserLogin
+        primaryColor="var(--primary)"
+        logoUrl={"/logo.png"}
+        signupUrl={"/signup"}
+        onError={(err) => console.log(err)}
+        onSuccess={() => navigate("/tasks")}
+      />
+    </div>
+  );
+};
 
-export default LoginPage
+export default LoginPage;
