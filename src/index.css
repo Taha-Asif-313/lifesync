@@ -1,17 +1,18 @@
 @import "tailwindcss";
 
-:root{
-  --primary : #00ba0f;
+:root {
+  --primary: #02cf04;
 }
 
-@theme{
-  --color-primary : var(--primary);
+@theme {
+  --color-primary: var(--primary);
 }
 
-body{
-    font-family: "Libre Franklin", sans-serif;
+body {
+  font-family: "Libre Franklin", sans-serif;
 }
 
+/* Shine animation */
 @keyframes shine {
   0% {
     background-position: 0% 50%;
@@ -25,4 +26,31 @@ body{
   background-size: 200% auto;
   box-shadow: 0 0 8px #00ba0f;
   animation: shine 2s linear infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a; /* Track color */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary); /* Thumb color */
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ba0f; /* Hover color */
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) #1a1a1a;
 }

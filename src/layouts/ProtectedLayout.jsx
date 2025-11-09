@@ -9,7 +9,7 @@ const ProtectedLayout = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,197,94,0.15),transparent_60%)] pointer-events-none" />
       <Navbar />
       {/* Auth Container */}
-      <div className="relative z-10 w-full pt-10">
+      <div className="relative z-10 w-full">
         <Outlet />
       </div>
     </div>

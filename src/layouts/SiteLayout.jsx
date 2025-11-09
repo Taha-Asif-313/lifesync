@@ -2,7 +2,7 @@ import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ListTodo, User, LogIn, Sparkles } from "lucide-react";
-import Navbar from "../components/site/Navbar";
+import SiteNavbar from "../components/site/SiteNavbar";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -15,7 +15,7 @@ const SiteLayout = () => {
 
   return (
     <div className="relative min-h-screen w-full bg-black flex items-center justify-center text-white overflow-hidden">
-      <Navbar />
+      <SiteNavbar />
 
       {/* 📄 Page Content */}
       <main className="relative z-10 w-full">

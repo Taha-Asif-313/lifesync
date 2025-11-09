@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 // Layouts
@@ -12,7 +17,11 @@ import TasksPage from "./pages/site/TasksPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import ProfilePage from "./pages/auth/ProfilePage";
-import { setSdkConfig } from "@neuctra/authix";
+import { ReactSignedIn, setSdkConfig } from "@neuctra/authix";
+import PrivacyPage from "./pages/site/PrivacyPage";
+import TermsPage from "./pages/site/TermsPage";
+import AboutPage from "./pages/site/AboutPage";
+import ContactPage from "./pages/site/ContactPage";
 
 const App = () => {
   setSdkConfig({
@@ -28,12 +37,26 @@ const App = () => {
           {/* 🏠 Public / Site Layout */}
           <Route element={<SiteLayout />}>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
           </Route>
 
           {/* 🔐 Auth Layout */}
-          <Route element={<ProtectedLayout />}>
+          <Route
+            element={
+              <ReactSignedIn
+                fallback={<Navigate to={"/"} />}
+                width={"100%"}
+                height={"100%"}
+              >
+                <ProtectedLayout />
+              </ReactSignedIn>
+            }
+          >
             <Route path="/tasks" element={<TasksPage />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Route>

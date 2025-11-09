@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const HeroContent = () => {
+const HeroSection = () => {
   const reduceMotion = useReducedMotion();
 
   return (
@@ -91,7 +91,7 @@ const HeroContent = () => {
             </span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
             <span className="bg-linear-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
               Design Your Day,
             </span>
@@ -150,14 +150,13 @@ const HeroContent = () => {
           transition={{ duration: 1 }}
           className="flex-1 flex justify-center lg:justify-center mt-12 lg:mt-0"
         >
-          <div className="relative rounded-3xl bg-linear-to-br from-[#00ba0f]/10 via-lime-500/10 to-emerald-500/10 backdrop-blur-lg">
+     
             <img
               src="/logo.png"
               height={400}
               width={400}
-              className="text-[#00ba0f] drop-shadow-[0_0_25px_#00ba0f]"
             />
-          </div>
+          
         </motion.div>
       </div>
 
@@ -179,4 +178,4 @@ const HeroContent = () => {
   );
 };
 
-export default HeroContent;
+export default HeroSection;

@@ -14,14 +14,12 @@ import {
   ShieldCheck,
   Heart,
 } from "lucide-react";
-import HeroContent from "../../components/HeroContent";
+import HeroSection from "../../components/site/HeroSection";
 
 const LandingPage = () => {
-  const reduceMotion = useReducedMotion();
-
   return (
     <main className="bg-[#0a0a0a] w-full text-white overflow-hidden">
-    <HeroContent/>
+      <HeroSection />
 
       {/* ===== ABOUT SECTION ===== */}
       <section className="py-24 px-6 lg:px-8 max-w-6xl mx-auto text-center">
@@ -105,7 +103,8 @@ const LandingPage = () => {
 
       {/* ===== FOOTER ===== */}
       <footer className="py-10 text-center text-gray-500 border-t border-zinc-800">
-        © {new Date().getFullYear()} <span className="text-[#00ba0f]">LifeSync</span>. All rights reserved.
+        © {new Date().getFullYear()}{" "}
+        <span className="text-[#00ba0f]">LifeSync</span>. All rights reserved.
       </footer>
     </main>
   );
