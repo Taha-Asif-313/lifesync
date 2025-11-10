@@ -30,10 +30,10 @@ const LandingPage = () => {
           transition={{ duration: 0.6 }}
           className="text-4xl font-bold mb-4 bg-linear-to-r from-[#00ba0f] to-lime-400 bg-clip-text text-transparent"
         >
-          Why LifeSync?
+          Why LyfeSync?
         </motion.h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          Your mind deserves clarity. LifeSync brings productivity and peace
+          Your mind deserves clarity. LyfeSync brings productivity and peace
           together — manage, reflect, and grow every day.
         </p>
       </section>
@@ -90,7 +90,7 @@ const LandingPage = () => {
         <div className="relative z-10 max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold mb-4 text-white">
             Start Planning Smarter with{" "}
-            <span className="text-[#00ba0f]">LifeSync</span>
+            <span className="text-[#00ba0f]">LyfeSync</span>
           </h2>
           <p className="text-gray-400 mb-8">
             Take charge of your time — one mindful task at a time.
@@ -104,7 +104,7 @@ const LandingPage = () => {
       {/* ===== FOOTER ===== */}
       <footer className="py-10 text-center text-gray-500 border-t border-zinc-800">
         © {new Date().getFullYear()}{" "}
-        <span className="text-[#00ba0f]">LifeSync</span>. All rights reserved.
+        <span className="text-[#00ba0f]">LyfeSync</span>. All rights reserved.
       </footer>
     </main>
   );

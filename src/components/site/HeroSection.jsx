@@ -69,7 +69,7 @@ const HeroSection = () => {
       )}
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col-reverse lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8">
+      <div className="relative z-10 max-md:py-14 flex flex-col-reverse lg:flex-row items-center justify-between w-full max-w-7xl mx-auto gap-8">
         {/* Text Section */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -92,7 +92,7 @@ const HeroSection = () => {
 
           {/* Paragraph */}
           <p className="text-sm pb-3 sm:text-base lg:text-lg text-gray-300 max-w-md sm:max-w-xl lg:max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-            LifeSync helps you bring structure, focus, and calm to your daily
+            LyfeSync helps you bring structure, focus, and calm to your daily
             flow — powered by AI, inspired by mindfulness.
           </p>
 

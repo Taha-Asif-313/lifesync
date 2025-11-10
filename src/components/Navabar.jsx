@@ -22,7 +22,7 @@ const Navbar = () => {
           >
             <img src="/logo.png" alt="Logo" height={34} width={34} />
             <span className="text-white">
-              Life<span className="text-primary">Sync</span>
+              Lyfe<span className="text-primary">Sync</span>
             </span>
           </Link>
 
