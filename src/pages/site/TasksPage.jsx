@@ -54,6 +54,8 @@ const TasksPage = () => {
 
   return (
     <div className="min-h-screen w-full px-5 py-20 bg-linear-to-b from-black to-zinc-950 text-white overflow-hidden">
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[60px_60px]" />
       <AddTaskModal Show={showInputBox} setShow={setShowInputBox} />
       {/* Task List Section */}
       <div className="max-w-7xl mx-auto mt-16 relative">

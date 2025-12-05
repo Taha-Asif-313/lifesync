@@ -17,7 +17,7 @@ import TasksPage from "./pages/site/TasksPage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import ProfilePage from "./pages/auth/ProfilePage";
-import { ReactSignedIn, setSdkConfig } from "@neuctra/authix";
+import { ReactSignedIn, ReactSignedOut, setSdkConfig } from "@neuctra/authix";
 import PrivacyPage from "./pages/site/PrivacyPage";
 import TermsPage from "./pages/site/TermsPage";
 import AboutPage from "./pages/site/AboutPage";
@@ -35,7 +35,17 @@ const App = () => {
       <div className="min-h-screen w-full bg-linear-to-b from-zinc-950 via-black to-zinc-900 text-white">
         <Routes>
           {/* 🏠 Public / Site Layout */}
-          <Route element={<SiteLayout />}>
+          <Route
+            element={
+              <ReactSignedOut
+                fallback={<Navigate to={"/tasks"} />}
+                width={"100%"}
+                height={"100%"}
+              >
+                <SiteLayout />
+              </ReactSignedOut>
+            }
+          >
             <Route path="/" element={<LandingPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />

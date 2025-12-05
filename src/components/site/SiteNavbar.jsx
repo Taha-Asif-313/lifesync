@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LogIn, User, Menu, X } from "lucide-react";
+import { LogIn, User, Menu, X, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import AuthContext from "../../context/authContext";
 
 const SiteNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const location = useLocation();
+  const { isLogin } = useContext(AuthContext);
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -71,20 +73,31 @@ const SiteNavbar = () => {
 
           {/* Desktop Right Controls */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              to="/login"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-transparent text-white transition-all duration-200 hover:scale-105"
-            >
-              <LogIn size={16} />
-              Login
-            </Link>
-            <Link
-              to="/signup"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-linear-to-r from-primary to-lime-500 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-green-500/25"
-            >
-              <User size={16} />
-              Sign Up
-            </Link>
+            {isLogin ? (
+              <Link
+                to={"/tasks"}
+                className="text-sm hover:text-primary flex items-center gap-2"
+              >
+                Go to tasks <ArrowRight size={18} />
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-transparent text-white transition-all duration-200 hover:scale-105"
+                >
+                  <LogIn size={16} />
+                  Login
+                </Link>
+                <Link
+                  to="/signup"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold bg-linear-to-r from-primary to-lime-500 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-green-500/25"
+                >
+                  <User size={16} />
+                  Sign Up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger */}

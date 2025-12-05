@@ -84,7 +84,7 @@ const TodoCard = ({ Task, DeleteTodo, CompleteTodo }) => {
     <li
       className={`group relative w-full border border-zinc-800 bg-linear-to-br from-zinc-950 via-black to-zinc-950
                   rounded-2xl px-5 py-5 flex flex-col gap-3 transition-all duration-500
-                  hover:shadow-[0_0_25px_var(--primary)] hover:scale-[1.015]
+                  hover:shadow-[0_0_15px_var(--primary)] hover:scale-[1.015]
                   ${
                     isExpired && !completed
                       ? "opacity-50 cursor-not-allowed"

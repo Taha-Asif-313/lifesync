@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Plus } from "lucide-react";
 import { ReactUserButton } from "@neuctra/authix";
 import { Link } from "react-router-dom";
@@ -6,6 +6,14 @@ import AddTaskModal from "./AddTaskModal";
 
 const Navbar = () => {
   const [showInputBox, setShowInputBox] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Detect scroll
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
@@ -13,7 +21,13 @@ const Navbar = () => {
       <AddTaskModal Show={showInputBox} setShow={setShowInputBox} />
 
       {/* 🌐 Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-30 backdrop-blur-md bg-black/70 shadow-md transition-all duration-300">
+      <nav
+        className={`fixed top-0 left-0 w-full z-30 backdrop-blur-md ${
+          scrolled ? "bg-black/70" : "bg-transparent"
+        } shadow-md transition-all duration-300`}
+      >
+        {/* Grid Background */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-size-[60px_60px]" />
         <div className="max-w-7xl mx-auto flex justify-between items-center px-5 py-3">
           {/* 🔹 Logo */}
           <Link
